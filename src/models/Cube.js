@@ -28,7 +28,7 @@ class Cube {
             name: 'Megaminx',
             description: 'Megaminx is an amazing cube with very little to possibly no flaws. The cube has a blocky and stable feel while retaining enough speed for most people ...',
             imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/61HpQqVQ37L._SY355_.jpg',
-            difficulty: '1'
+            difficulty: '3'
         }
     ];
 
