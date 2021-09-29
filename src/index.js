@@ -6,6 +6,9 @@ const routes = require('./config/routes.js');
 
 const app = express();
 
+app.use(express.urlencoded({extended: true}));
+// app.use(express.json());
+
 initHandlebars(app);
 
 app.use(express.static(path.resolve('./src/static')));
