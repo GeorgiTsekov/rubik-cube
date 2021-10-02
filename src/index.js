@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+initDatabase = require('./config/database');
 
 const initHandlebars = require('./config/handlebars.js');
 const routes = require('./config/routes.js');
@@ -14,4 +15,10 @@ initHandlebars(app);
 app.use(express.static(path.resolve('./src/static')));
 app.use(routes);
 
-app.listen(config.PORT, console.log.bind(console, `Server is running on http://localhost:${config.PORT}`));
+initDatabase(config.DB_CONNECTION_STRING)
+    .then(() => {
+        app.listen(config.PORT, console.log.bind(console, `Server is running on http://localhost:${config.PORT}`));
+    })
+    .catch(err => {
+        console.log('Application init failed: ', err);
+    })
