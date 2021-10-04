@@ -22,7 +22,7 @@ const createCube = async (req, res) => {
 };
 
 const getDetails = async (req, res) => {
-    let cube = await cubeService.getCurrent(req.params._id);
+    let cube = await cubeService.getCurrent(req.params.cubeId);
     res.render('details', { ...cube });
 }
 
