@@ -14,12 +14,12 @@ const about = (req, res) => {
     res.render('about');
 }
 
-const search = (req, res) => {
+const search = async (req, res) => {
     let search = req.query.search;
     let from = parseInt(req.query.from);
     let to = parseInt(req.query.to);
 
-    let cubes = cubeService.search(search, from, to);
+    let cubes = await cubeService.search(search, from, to);
 
     res.render('index', {
         title: 'SEARCH',
