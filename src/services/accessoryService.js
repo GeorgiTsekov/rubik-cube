@@ -5,12 +5,17 @@ async function create(name, imageUrl, description) {
 };
 
 async function getAll() {
-    return await Accessory.find({}).lean();
+    return Accessory.find({}).lean();
 };
 
-const accessoryService ={
+async function getAllWithout(accessoryIds) {
+    return Accessory.find({ _id: { $nin: accessoryIds } }).lean();
+};
+
+const accessoryService = {
     create,
     getAll,
+    getAllWithout,
 };
 
 module.exports = accessoryService;
