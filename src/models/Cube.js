@@ -29,6 +29,11 @@ const cubeSchema = new mongoose.Schema({
     ]
 });
 
+// Only for demo
+// cubeSchema.statics.findByName = function(name) {
+//     return this.find({name});
+// };
+
 const Cube = mongoose.model('Cube', cubeSchema);
 
 module.exports = Cube;
