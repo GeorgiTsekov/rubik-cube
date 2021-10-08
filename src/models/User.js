@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const accessorySchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, 'username is required!'],
@@ -10,9 +11,18 @@ const accessorySchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'password is required!'],
+        minlength: 6,
     },
 });
 
-const User = mongoose.model('User', accessorySchema);
+userSchema.pre('save', function (next) {
+    bcrypt.hash(this.password, 10)
+        .then(hash => {
+            this.password = hash;
+            next();
+        });
+});
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
