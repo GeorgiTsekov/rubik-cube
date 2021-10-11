@@ -6,20 +6,17 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    try {
-        let { username, password } = req.body;
+    let { username, password } = req.body;
 
-        let user = await authService.login(username, password);
+    let user = await authService.login(username, password);
 
-        if (user) {
-            res.redirect('/');
-        } else {
-            res.redirect('/404');
-        }
-
-    } catch (error) {
-        res.status(400).send(error);
+    if (!user) {
+        return res.redirect('/404');
     }
+
+    let token = await authService.createToken(user);
+
+    res.redirect('/');
 });
 
 router.get('/register', (req, res) => {
@@ -31,7 +28,6 @@ router.post('/register', async (req, res) => {
         let { username, password, repeatPassword } = req.body;
 
         await authService.register(username, password, repeatPassword);
-
         res.redirect('/login');
 
     } catch (error) {
