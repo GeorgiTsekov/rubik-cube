@@ -14,9 +14,9 @@ const createCube = async (req, res) => {
 
     try {
         await cubeService.create(name, description, imageUrl, difficulty);
-    
+
         res.redirect('/');
-        
+
     } catch (error) {
         res.status(400).send(error.message).end();
     }
@@ -27,9 +27,19 @@ const getDetails = async (req, res) => {
     res.render('cube/details', { ...cube });
 };
 
+const getDeleteCubePage = (req, res) => {
+    res.render('cube/delete');
+}
+
+const getEditCubePage = (req, res) => {
+    res.render('cube/edit');
+}
+
 router.get('/create', getCreateCubePage);
 router.post('/create', createCube);
-router.get('/:cubeId', getDetails);
+router.get('/:cubeId/delete', getDeleteCubePage);
 router.use('/:cubeId/accessory', cubeAccessoryController);
+router.get('/:cubeId/edit', getEditCubePage);
+router.get('/:cubeId', getDetails);
 
 module.exports = router;
