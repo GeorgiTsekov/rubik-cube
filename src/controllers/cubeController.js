@@ -28,19 +28,39 @@ const getDetails = async (req, res) => {
     res.render('cube/details', { ...cube });
 };
 
-const getDeleteCubePage = (req, res) => {
-    res.render('cube/delete');
+const getDeleteCubePage = async (req, res) => {
+    let cube = await cubeService.getCurrent(req.params.cubeId);
+
+    res.render('cube/delete', { ...cube });
 }
 
-const getEditCubePage = (req, res) => {
-    res.render('cube/edit');
+const postDeleteCubePage = async (req, res) => {
+    await cubeService.deleteCurrent(req.params.cubeId);
+
+    res.redirect('/');
+}
+
+const getEditCubePage = async (req, res) => {
+    let cube = await cubeService.getCurrent(req.params.cubeId);
+
+    res.render('cube/edit', { ...cube });
+}
+
+const postEditCubePage = async (req, res) => {
+    let updatedCube = await req.body;
+    let currentId = req.params.cubeId;
+    await cubeService.editCurrent(currentId, updatedCube);
+
+    res.redirect(`/cube/${currentId}`);
 }
 
 router.get('/create', isAuth, getCreateCubePage);
 router.post('/create', isAuth, createCube);
 router.get('/:cubeId', getDetails);
 router.get('/:cubeId/delete', isAuth, getDeleteCubePage);
+router.post('/:cubeId/delete', isAuth, postDeleteCubePage);
 router.get('/:cubeId/edit', isAuth, getEditCubePage);
+router.post('/:cubeId/edit', isAuth, postEditCubePage);
 
 router.use('/:cubeId/accessory', cubeAccessoryController);
 
