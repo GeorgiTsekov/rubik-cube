@@ -6,7 +6,7 @@ const { SECRET } = require('../constants');
 
 exports.register = function (username, password, repeatPassword) {
     if (password !== repeatPassword) {
-        throw { message: 'Password must be equal to RepeatPassword' }
+        throw { message: 'Password must be equal to Re-Password' }
     }
 
     // return bcrypt.hash(password, 10)

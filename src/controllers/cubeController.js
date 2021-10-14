@@ -1,4 +1,5 @@
 const express = require('express');
+// const validator = require('validator');
 
 const cubeService = require('../services/cubeService');
 const cubeAccessoryController = require('../controllers/cubeAccessoryController');
@@ -13,9 +14,13 @@ const getCreateCubePage = (req, res) => {
 const createCube = async (req, res) => {
     let { name, description, imageUrl, difficulty } = req.body;
 
+    // if (!validator.isURL(imageUrl)) {
+    //     return res.status('400').send('Invalid Email!');
+    // }
+
+
     try {
         await cubeService.create(name, description, imageUrl, difficulty);
-
         res.redirect('/');
 
     } catch (error) {

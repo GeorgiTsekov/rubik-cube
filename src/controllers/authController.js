@@ -2,6 +2,23 @@ const router = require('express').Router();
 const authService = require('../services/authService');
 const { TOKEN_COOKIE_NAME } = require('../constants');
 
+router.get('/register', (req, res) => {
+    res.render('auth/register');
+});
+
+router.post('/register', async (req, res, next) => {
+    try {
+        let { username, password, repeatPassword } = req.body;
+
+        await authService.register(username, password, repeatPassword);
+        res.redirect('/login');
+
+    } catch (error) {
+        res.status(400).render('auth/register', { error: error.message });
+        // next(error.message);
+    }
+});
+
 router.get('/login', (req, res) => {
     res.render('auth/login');
 });
@@ -23,22 +40,6 @@ router.post('/login', async (req, res) => {
     });
 
     res.redirect('/');
-});
-
-router.get('/register', (req, res) => {
-    res.render('auth/register');
-});
-
-router.post('/register', async (req, res) => {
-    try {
-        let { username, password, repeatPassword } = req.body;
-
-        await authService.register(username, password, repeatPassword);
-        res.redirect('/login');
-
-    } catch (error) {
-        res.status(400).send(error);
-    }
 });
 
 module.exports = router;

@@ -14,7 +14,7 @@ exports.auth = function (req, res, next) {
         }
 
         req.user = decodedToken;
-
+        res.locals.user = decodedToken;
         next();
     });
 }

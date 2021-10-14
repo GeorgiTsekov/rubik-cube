@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const { errorHandler } = require('./middlewares/errorHandlerMiddleware');
 
 const routes = require('./config/routes.js');
 const config = require('./config/config.json')[process.env.NODE_ENV];
@@ -17,6 +18,7 @@ initHandlebars(app);
 
 app.use(express.static(path.resolve('./src/static')));
 app.use(routes);
+app.use(errorHandler);
 
 initDatabase(config.DB_CONNECTION_STRING)
     .then(() => {
