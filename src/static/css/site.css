@@ -48,6 +48,13 @@ header ul li a {
     margin: 0 1em;
 }
 
+header ul span {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    margin: 0 1em;
+}
+
 header ul li a:hover {
     cursor: pointer;
     text-decoration: underline;

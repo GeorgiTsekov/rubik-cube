@@ -24,20 +24,31 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    let { username, password } = req.body;
+    try {
+        let { username, password } = req.body;
 
-    let user = await authService.login(username, password);
+        let user = await authService.login(username, password);
 
-    if (!user) {
-        return res.redirect('/404');
+        if (!user) {
+            return res.redirect('/404');
+        }
+
+        let token = await authService.createToken(user);
+
+        res.cookie(TOKEN_COOKIE_NAME, token, {
+            httpOnly: true,
+            // secure: true,
+        });
+
+        res.redirect('/');
+
+    } catch (error) {
+        res.status(400).render('auth/login', { error: error.message });
     }
+});
 
-    let token = await authService.createToken(user);
-
-    res.cookie(TOKEN_COOKIE_NAME, token, {
-        httpOnly: true,
-        // secure: true,
-    });
+router.get('/logout', (req, res) => {
+    res.clearCookie(TOKEN_COOKIE_NAME);
 
     res.redirect('/');
 });

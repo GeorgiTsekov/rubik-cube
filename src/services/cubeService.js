@@ -1,17 +1,17 @@
 const Cube = require('../models/Cube.js');
 const Accessory = require('../models/Accessory');
-const accessoryService = require('../services/accessoryService');
 
 const getAll = () => Cube.find({}).lean();
 
 const getCurrent = (id) => Cube.findById(id).populate('accessories').lean();
 
-const create = (name, description, imageUrl, difficulty) => {
+const create = (name, description, imageUrl, difficulty, userId) => {
     let cube = new Cube({
         name,
         description,
         imageUrl,
         difficulty,
+        creator: userId,
     });
 
     return cube.save();

@@ -28,6 +28,9 @@ exports.login = async function (username, password) {
     //         }
     //     })
     let user = await User.findByUsername(username);
+    if (!user) {
+        throw { message: 'Cannot find username or password!' }
+    }
     let isValid = await bcrypt.compare(password, user.password);
     if (isValid) {
         return user;

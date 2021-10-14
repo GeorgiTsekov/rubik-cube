@@ -9,7 +9,7 @@ const cubeSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        validate: [/^[a-zA-Z0-9]+$/, 'Name shout consist english letters and digits only!!!'],
+        validate: [/^[a-zA-Z0-9 ]+$/, 'Name shout consist english letters and digits only!!!'],
         unique: true,
     },
     description: {
@@ -35,7 +35,11 @@ const cubeSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref: 'Accessory',
         }
-    ]
+    ],
+    creator: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+    }
 });
 
 // Only for demo

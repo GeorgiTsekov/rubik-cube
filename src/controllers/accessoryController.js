@@ -9,9 +9,14 @@ router.get('/create', (req, res) => {
 router.post('/create', async (req, res) => {
     let { name, imageUrl, description } = req.body;
 
-    await accessoryService.create(name, imageUrl, description);
+    try {
+        await accessoryService.create(name, imageUrl, description);
 
-    res.redirect('/');
+        res.redirect('/');
+
+    } catch (error) {
+        res.status(400).render('accessory/create', { error: error.message });
+    }
 })
 
 module.exports = router;
